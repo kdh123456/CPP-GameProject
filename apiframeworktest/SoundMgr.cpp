@@ -10,6 +10,7 @@ SoundMgr::~SoundMgr()
 	// 다 쓰고 난 후에는 반드시 close, release해야함.
 	m_pSystem->close();
 	m_pSystem->release();
+	int a = 0;
 }
 void SoundMgr::Init()
 {
