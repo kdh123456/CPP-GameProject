@@ -86,6 +86,9 @@
     <Filter Include="Engine\03. Manager\SoundMgr">
       <UniqueIdentifier>{e09d7cab-b2dc-4a5f-8924-8af5317c88d2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\04. Object\Plane">
+      <UniqueIdentifier>{065a4dbc-bc9f-4acd-b112-8855602a8695}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h">
@@ -184,6 +187,9 @@
     <ClInclude Include="SoundMgr.h">
       <Filter>Engine\03. Manager\SoundMgr</Filter>
     </ClInclude>
+    <ClInclude Include="Plane.h">
+      <Filter>Engine\04. Object\Plane</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="apiframeworktest.rc">
@@ -277,6 +283,9 @@
     </ClCompile>
     <ClCompile Include="SoundMgr.cpp">
       <Filter>Engine\03. Manager\SoundMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Plane.cpp">
+      <Filter>Engine\04. Object\Plane</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

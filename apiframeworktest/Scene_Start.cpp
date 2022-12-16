@@ -2,6 +2,7 @@
 #include "Scene_Start.h"
 #include "Object.h"
 #include "Player.h"
+#include "Plane.h"
 #include "Monster.h"
 #include "Core.h"
 #include "Image.h"
@@ -26,6 +27,11 @@ void Scene_Start::Enter()
 	pObj->SetPos(Vec2(Core::GetInst()->GetResolution().x/2, Core::GetInst()->GetResolution().y/2));
 	pObj->SetScale(Vec2(100.f,100.f));
 	AddObject(pObj, GROUP_TYPE::PLAYER);
+
+	Object* plane = new Plane;
+	plane->SetPos(Vec2(Core::GetInst()->GetResolution().x / 2, Core::GetInst()->GetResolution().y / 3));
+	plane->SetScale(Vec2(500.f, 100.f));
+	AddObject(plane, GROUP_TYPE::DEFAULT);
 
 //	Object* pOtherPlayer = new Player(*(Player*)pObj);
 	/*Object* pOtherPlayer = pObj->Clone();
