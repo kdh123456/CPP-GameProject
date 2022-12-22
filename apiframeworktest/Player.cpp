@@ -11,6 +11,7 @@
 #include "Collider.h"
 #include "Animator.h"
 #include "Animation.h"
+
 Player::Player()
 {
 	// collider 새성
@@ -27,7 +28,7 @@ Player::Player()
 
 	// animation offset 위로 올리기. 
 	Animation* pAnim = GetAnimator()->FindAnimation(L"Jiwoofront");
-	for(size_t i=0;i<pAnim->GetMaxFrame();i++)
+	for (size_t i = 0; i < pAnim->GetMaxFrame(); i++)
 		pAnim->GetFrame(i).vOffset = Vec2(10.f, -50.f);
 }
 Player::~Player()
@@ -37,46 +38,76 @@ Player::~Player()
 }
 void Player::Update()
 {
-	Vec2 vPos = GetPos();
-	if(KEY_HOLD(KEY::UP))
-	{
-		vPos.y -= 300.f * fDT;
-	}
-	if (KEY_HOLD(KEY::DOWN))
-	{
-		vPos.y += 300.f * fDT;
-	}
-	if (KEY_HOLD(KEY::LEFT))
-	{
-		vPos.x -= 300.f * fDT;
-	}
-	if (KEY_HOLD(KEY::RIGHT))
-	{
-		vPos.x += 300.f * fDT;
-	}
-	if (KEY_TAP(KEY::SPACE))
-	{
-		CreateBullet();
-	}
-	SetPos(vPos);
+	m_pos = GetPos();
+	Input();
 	GetAnimator()->Update();
+	if (m_isGrounded == false || m_headBroken)
+		m_pos.y += m_gravityScale * fDT;
+	SetPos(m_pos);
 }
 
-void Player::CreateBullet()
+void Player::EnterCollision(Collider* _pOther)
 {
-	Vec2 vBulletPos = GetPos();
-	vBulletPos.y -= GetScale().y / 2.f;
-
-	// 
-	Bullet* pBullet = new Bullet;
-	pBullet->SetName(L"Bullet_Player");
-	pBullet->SetPos(vBulletPos);
-	pBullet->SetScale(Vec2(25.f, 25.f));
-	pBullet->SetDir(Vec2(0.f, -1.f));
-	CreateObject(pBullet, GROUP_TYPE::BULLET_PLAYER);
-	//Scene* pCurScene = SceneMgr::GetInst()->GetCurScene();
-	//pCurScene->AddObject(pBullet,GROUP_TYPE::BULLET);
+	Object* pOtherObj = _pOther->GetObj();
+	if (pOtherObj->GetName() == L"Plane")
+	{
+		m_headBroken = false;
+		m_isGrounded = true;
+	}
+	else if (pOtherObj->GetName() == L"Wall")
+	{
+		m_headBroken = true;
+		m_isGrounded = false;
+	}
 }
+
+void Player::Jump()
+{
+	if (m_isGrounded == false)
+		return;
+
+	m_isGrounded = false;
+	m_pos.y -= m_jumpPower;
+}
+
+void Player::Move(MoveDir dir)
+{
+	if (m_isGrounded == false)
+		return;
+
+	if (dir == MoveDir::Left)
+		m_pos.x -= 300.f * fDT;
+	else if (dir == MoveDir::Right)
+		m_pos.x += 300.f * fDT;
+}
+
+void Player::TryParrying()
+{
+}
+
+void Player::TryAttack()
+{
+	Collider* atkCol = new Collider();
+	atkCol->FinalUpdate();
+	if()
+}
+
+void Player::TrySkill()
+{
+}
+
+void Player::Input()
+{
+	if (KEY_HOLD(KEY::LEFT))
+		Move(MoveDir::Left);
+	if (KEY_HOLD(KEY::RIGHT))
+		Move(MoveDir::Right);
+	if (KEY_HOLD(KEY::DOWN))
+		TryParrying();
+	if (KEY_TAP(KEY::UP))
+		Jump();
+}
+
 void Player::Render(HDC _dc)
 {
 	Component_Render(_dc);
