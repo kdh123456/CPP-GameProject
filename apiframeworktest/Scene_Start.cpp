@@ -10,6 +10,7 @@
 #include "KeyMgr.h"
 #include "SceneMgr.h"
 #include "SoundMgr.h"
+#include "Wall.h"
 Scene_Start::Scene_Start()
 {
 }
@@ -26,6 +27,11 @@ void Scene_Start::Enter()
 	pObj->SetPos(Vec2(Core::GetInst()->GetResolution().x/2, Core::GetInst()->GetResolution().y/2));
 	pObj->SetScale(Vec2(100.f,100.f));
 	AddObject(pObj, GROUP_TYPE::PLAYER);
+
+	Object* Obj = new Wall(200,1);
+	Obj->SetPos(Vec2(Core::GetInst()->GetResolution().x/2, (LONG)170));
+	Obj->SetScale(Vec2(1, 1));
+	AddObject(Obj, GROUP_TYPE::Wall);
 
 //	Object* pOtherPlayer = new Player(*(Player*)pObj);
 	/*Object* pOtherPlayer = pObj->Clone();

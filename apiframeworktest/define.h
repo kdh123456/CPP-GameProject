@@ -43,6 +43,7 @@ enum class GROUP_TYPE
 	BULLET_PLAYER,
 	BULLET_MONSTER,
 	MONSTER,
+	Wall,
 
 	END = 32,
 };

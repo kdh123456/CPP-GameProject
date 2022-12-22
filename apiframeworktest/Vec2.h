@@ -13,6 +13,10 @@ public:
 	Vec2(int _x, int _y);
 	Vec2(long _x, long _y);
 	Vec2(POINT _pt);
+	static Vec2 zero()
+	{
+		return Vec2(0, 0);
+	};
 	float Length();
 	Vec2& Normalize();
 	Vec2 operator + (Vec2 _vOther)
