@@ -7,10 +7,9 @@ SoundMgr::SoundMgr()
 SoundMgr::~SoundMgr()
 {
 	Safe_Delete_Map(m_mapSod);
-	// ë‹¤ ì“°ê³  ë‚œ í›„ì—ëŠ” ë°˜ë“œì‹œ close, releaseí•´ì•¼í•¨.
+	// ´Ù ¾²°í ³­ ÈÄ¿¡´Â ¹Ýµå½Ã close, releaseÇØ¾ßÇÔ.
 	m_pSystem->close();
 	m_pSystem->release();
-	int b = 0;
 }
 void SoundMgr::Init()
 {
@@ -20,7 +19,7 @@ void SoundMgr::Init()
 }
 void SoundMgr::LoadSound(const wstring& _strKey, bool _bLoop, const wstring& _strRelativePath)
 {
-	// ì°¾ìœ¼ë©´ ìƒì„± x
+	// Ã£À¸¸é »ý¼º x
 	if (FindSound(_strKey))
 		return;
 	wstring strFilePath = PathMgr::GetInst()->GetRsrcPath();
@@ -32,10 +31,10 @@ void SoundMgr::LoadSound(const wstring& _strKey, bool _bLoop, const wstring& _st
 	str.resize(strFilePath.length());
 	wcstombs_s(&size, &str[0], str.size() + 1, strFilePath.c_str(), strFilePath.size());
 
-	// ë£¨í”„ í• ì§€ ë§ì§€ ê²°ì •
-	FMOD_MODE eMode = FMOD_LOOP_NORMAL; // ë°˜ë³µ ì¶œë ¥
+	// ·çÇÁ ÇÒÁö ¸»Áö °áÁ¤
+	FMOD_MODE eMode = FMOD_LOOP_NORMAL; // ¹Ýº¹ Ãâ·Â
 	if (!_bLoop)
-		eMode = FMOD_DEFAULT; // ì‚¬ìš´ë“œ 1ë²ˆë§Œ ì¶œë ¥
+		eMode = FMOD_DEFAULT; // »ç¿îµå 1¹ø¸¸ Ãâ·Â
 
 	PSOUNDINFO ptSound = new SOUNDINFO;
 	ptSound->bLoop = _bLoop;

@@ -11,7 +11,6 @@
 #include "Collider.h"
 #include "Animator.h"
 #include "Animation.h"
-
 Player::Player()
 {
 	// collider 새성
@@ -28,7 +27,7 @@ Player::Player()
 
 	// animation offset 위로 올리기. 
 	Animation* pAnim = GetAnimator()->FindAnimation(L"Jiwoofront");
-	for (size_t i = 0; i < pAnim->GetMaxFrame(); i++)
+	for(size_t i=0;i<pAnim->GetMaxFrame();i++)
 		pAnim->GetFrame(i).vOffset = Vec2(10.f, -50.f);
 }
 Player::~Player()
@@ -38,64 +37,30 @@ Player::~Player()
 }
 void Player::Update()
 {
-	m_pos = GetPos();
-	Input();
-	GetAnimator()->Update();
-	if (m_isGrounded == false)
-		m_pos.y += m_gravityScale * fDT;
-	SetPos(m_pos);
-}
-
-void Player::EnterCollision(Collider* _pOther)
-{
-	Object* pOtherObj = _pOther->GetObj();
-	if (pOtherObj->GetName() == L"Plane")
+	Vec2 vPos = GetPos();
+	if(KEY_HOLD(KEY::UP))
 	{
-		m_isGrounded = true;
+		vPos.y -= 300.f * fDT;
 	}
-}
-
-void Player::Jump()
-{
-	m_isGrounded = false;
-	m_pos.y -= m_jumpPower;
-}
-
-void Player::Move(MoveDir dir)
-{
-	if (m_isGrounded == false)
-		return;
-
-	if (dir == MoveDir::Left)
-		m_pos.x -= 300.f * fDT;
-	else if (dir == MoveDir::Right)
-		m_pos.x += 300.f * fDT;
-}
-
-void Player::TryParrying()
-{
-}
-
-void Player::TryAttack()
-{
-}
-
-void Player::TrySkill()
-{
-}
-
-void Player::Input()
-{
-	if (KEY_HOLD(KEY::LEFT))
-		Move(MoveDir::Left);
-	if (KEY_HOLD(KEY::RIGHT))
-		Move(MoveDir::Right);
 	if (KEY_HOLD(KEY::DOWN))
-		TryParrying();
-	if (KEY_TAP(KEY::UP))
-		Jump();
+	{
+		vPos.y += 300.f * fDT;
+	}
+	if (KEY_HOLD(KEY::LEFT))
+	{
+		vPos.x -= 300.f * fDT;
+	}
+	if (KEY_HOLD(KEY::RIGHT))
+	{
+		vPos.x += 300.f * fDT;
+	}
+	if (KEY_TAP(KEY::SPACE))
+	{
+		CreateBullet();
+	}
+	SetPos(vPos);
+	GetAnimator()->Update();
 }
-
 
 void Player::CreateBullet()
 {

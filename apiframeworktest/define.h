@@ -36,12 +36,6 @@ enum class KEY
 	LAST // 끝 (END=는 있으니까)
 };
 
-enum class MoveDir
-{
-	Left,
-	Right
-};
-
 enum class GROUP_TYPE
 {
 	DEFAULT,
