@@ -89,7 +89,7 @@ void Player::TryAttack()
 {
 	Collider* atkCol = new Collider();
 	atkCol->FinalUpdate();
-	if()
+//	if()
 }
 
 void Player::TrySkill()
