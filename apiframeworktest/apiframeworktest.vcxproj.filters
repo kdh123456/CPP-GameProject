@@ -86,8 +86,8 @@
     <Filter Include="Engine\03. Manager\SoundMgr">
       <UniqueIdentifier>{e09d7cab-b2dc-4a5f-8924-8af5317c88d2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Plane">
-      <UniqueIdentifier>{2dd15163-24db-4a53-9e05-66fd1cae65a4}</UniqueIdentifier>
+    <Filter Include="Engine\04. Object\Wall">
+      <UniqueIdentifier>{60c81fac-e0ca-494f-b018-230720a00f4d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -187,8 +187,8 @@
     <ClInclude Include="SoundMgr.h">
       <Filter>Engine\03. Manager\SoundMgr</Filter>
     </ClInclude>
-    <ClInclude Include="Plane.h">
-      <Filter>Engine\Plane</Filter>
+    <ClInclude Include="Wall.h">
+      <Filter>Engine\04. Object\Wall</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -284,8 +284,8 @@
     <ClCompile Include="SoundMgr.cpp">
       <Filter>Engine\03. Manager\SoundMgr</Filter>
     </ClCompile>
-    <ClCompile Include="Plane.cpp">
-      <Filter>Engine\Plane</Filter>
+    <ClCompile Include="Wall.cpp">
+      <Filter>Engine\04. Object\Wall</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
