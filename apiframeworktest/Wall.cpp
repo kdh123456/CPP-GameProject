@@ -4,9 +4,13 @@
 #include "TimeMgr.h"
 #include "Collider.h"
 #include "Image.h"
+#include "KeyMgr.h"
+#include "Core.h"
 
 Wall::Wall(float speed, float damage)
 {
+	jumpTimer = 0;
+	jumpHeight = Core::GetInst()->GetResolution().y - Core::GetInst()->GetResolution().y / 9;
 	_speed = speed;
 	_damage = damage;
 
@@ -25,11 +29,23 @@ Wall::~Wall()
 
 void Wall::Update()
 {
-	int Direction = isParry == true ? -1 : 1;
+	if (KEY_TAP(KEY::SPACE))
+	{
+		isJump = true;
+	}
 
 	Vec2 vPos = GetPos();
-	vPos.y += _speed * fDT * Direction;
+	if (!isJump)
+	{
+		int Direction = isParry == true ? -1 : 1;
 
+		vPos.y += _speed * fDT * Direction;
+
+	}
+	else
+	{
+		Jump(vPos.y, jumpTimer, 2);
+	}
 	SetPos(vPos);
 }
 

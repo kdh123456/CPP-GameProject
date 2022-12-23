@@ -1,13 +1,10 @@
 #include "pch.h"
 #include "Object.h"
 //#include "KeyMgr.h"
-//#include "TimeMgr.h"
+#include "Core.h"
+#include "TimeMgr.h"
 #include "Collider.h"
 #include "Animator.h"
-//void Object::Update()
-//{
-//
-//}
 
 Object::Object()
 	: m_vPos{}
@@ -35,6 +32,28 @@ Object::Object(const Object& _origin)
 	{
 		m_pAnimator = new Animator(*_origin.m_pAnimator);
 		m_pAnimator->m_pOwner = this;
+	}
+}
+
+void Object::Jump(float &jumpHeight, float &jumpTime, float jumpPower)
+{
+	if (!isJump) return;
+
+	jumpHeight += (jumpTime * jumpTime - jumpPower * jumpTime) / 2.f;
+
+	if (jumpTime < jumpPower)
+	{
+		jumpTime += 0.008f;
+	}
+	else
+	{
+		jumpTime += fDT;
+	}
+
+	if (jumpTime > jumpPower * 1.15f)// * 1.5f)
+	{
+		jumpTime = 0;
+		isJump = false;
 	}
 }
 

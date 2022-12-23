@@ -13,6 +13,9 @@ private:
 	wstring m_strName;
 	bool    m_bAlive;
 public:
+	bool isJump = false;
+	float jumpTimer = 0;
+	float jumpHeight = 0;
 	void SetPos(Vec2 _vPos) { m_vPos = _vPos; }
 	void SetScale(Vec2 _vScale) { m_vScale = _vScale; }
 	const Vec2& GetPos() { return m_vPos; }
@@ -21,6 +24,7 @@ public:
 	Animator* GetAnimator() { return m_pAnimator; }
 	void	CreateCollider();
 	void	CreateAnimator();
+	void	Jump(float &jumpHeight, float& jumpTime, float jumpPower);
 	void SetName(const wstring& _strName) { m_strName = _strName; }
 	const wstring& GetName() { return m_strName; }
 	bool IsDead() { return !m_bAlive; }
