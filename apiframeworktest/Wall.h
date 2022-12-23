@@ -11,6 +11,8 @@ private:
     float _damage;
     Image* _image;
 public:
+    bool isParry;
+public:
     Wall(float _speed, float _damage);
     ~Wall();
 public:
