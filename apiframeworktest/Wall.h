@@ -13,9 +13,10 @@ private:
 public:
     bool isParry;
 public:
-    Wall(float _speed, float _damage);
+    Wall(float _speed, float _damage, Vec2 startPos);
     ~Wall();
 public:
+    Image* GetImage() { return _image; };
     void Update() override;
     void Render(HDC _dc) override;
     virtual void EnterCollision(Collider* _pOther);
