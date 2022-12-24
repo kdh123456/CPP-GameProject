@@ -11,6 +11,8 @@
 #include "Collider.h"
 #include "Animator.h"
 #include "Animation.h"
+#include "Slash.h"
+#include "Parrying.h"
 
 Player::Player()
 {
@@ -30,11 +32,11 @@ Player::Player()
 		Vec2(90.f, 75.f), // 자르기 사이즈
 		Vec2(90.f, 0.f), // 프레임당 움직일 사이즈?
 		2,  // 프레임 크기
-		0.4f); // 프레임 당 속도
+		0.2f); // 프레임 당 속도
 	ani->CreateAnimation(
 		L"PlayerGroundAttack", pImg, Vec2(180.f, 0.f), Vec2(90.f, 75.f), Vec2(90.f, 0.f),
 		2,  
-		0.2f);
+		0.1f);
 	ani->CreateAnimation(
 		L"PlayerGroundParry", pImg, Vec2(360.f, 0.f), Vec2(90.f, 75.f), Vec2(90.f, 0.f),
 		1,
@@ -46,7 +48,7 @@ Player::Player()
 	ani->CreateAnimation(
 		L"PlayerJumpAttack", pImg, Vec2(540.f, 0.f), Vec2(90.f, 75.f), Vec2(90.f, 0.f),
 		2,
-		0.2f);
+		0.1f);
 	ani->CreateAnimation(
 		L"PlayerJumpParry", pImg, Vec2(720.f, 0.f), Vec2(90.f, 75.f), Vec2(90.f, 0.f),
 		1,
@@ -131,6 +133,10 @@ void Player::TryParrying()
 		GetAnimator()->Play(L"PlayerGroundParry", false);
 	else
 		GetAnimator()->Play(L"PlayerJumpParry", false);
+	Vec2 summonPos = GetPos();
+	summonPos.y -= 20.0f;
+	Object* obj = new Parrying(summonPos, 0.2f);
+	SceneMgr::GetInst()->GetCurScene()->AddObject(obj, GROUP_TYPE::BULLET_PLAYER);
 }
 
 void Player::TryAttack()
@@ -139,7 +145,10 @@ void Player::TryAttack()
 		GetAnimator()->Play(L"PlayerGroundAttack", false);
 	else
 		GetAnimator()->Play(L"PlayerJumpAttack", false);
-	//	if()
+	Vec2 summonPos = GetPos();
+	summonPos.y -= 20.0f;
+	Object* obj = new Slash(summonPos, 0.2f);
+	SceneMgr::GetInst()->GetCurScene()->AddObject(obj, GROUP_TYPE::BULLET_PLAYER);
 }
 
 void Player::TrySkill()
@@ -152,7 +161,7 @@ void Player::Input()
 		Move(MoveDir::Left);
 	if (KEY_HOLD(KEY::RIGHT))
 		Move(MoveDir::Right);
-	if (KEY_HOLD(KEY::DOWN))
+	if (KEY_TAP(KEY::DOWN))
 		TryParrying();
 	if (KEY_TAP(KEY::UP))
 		PlayerJump();

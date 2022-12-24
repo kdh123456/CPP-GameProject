@@ -174,6 +174,7 @@
     <ClInclude Include="KeyMgr.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="Parrying.h" />
     <ClInclude Include="PathMgr.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Plane.h" />
@@ -186,6 +187,7 @@
     <ClInclude Include="Scene_01.h" />
     <ClInclude Include="Scene_Start.h" />
     <ClInclude Include="SelectGDI.h" />
+    <ClInclude Include="Slash.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="SoundMgr.h" />
     <ClInclude Include="targetver.h" />
@@ -214,6 +216,7 @@
     </ClCompile>
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Parrying.cpp" />
     <ClCompile Include="PathMgr.cpp" />
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -224,6 +227,7 @@
     <ClCompile Include="Scene_01.cpp" />
     <ClCompile Include="Scene_Start.cpp" />
     <ClCompile Include="SelectGDI.cpp" />
+    <ClCompile Include="Slash.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="SoundMgr.cpp" />
     <ClCompile Include="TimeMgr.cpp" />
