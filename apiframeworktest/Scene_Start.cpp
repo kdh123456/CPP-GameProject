@@ -24,7 +24,7 @@ Scene_Start::~Scene_Start()
 }
 void Scene_Start::Enter()
 {
-	WallMgr* wallmg = new WallMgr(5, 1, 100, 90, 1);
+	WallMgr* wallmg = new WallMgr(5, 1, 100, 100, 10);
 	wallmgr = *wallmg;
 
 	SoundMgr::GetInst()->LoadSound(L"BGM", true, L"Sound\\pianobgm.wav");
@@ -61,10 +61,10 @@ void Scene_Start::Enter()
 	//AddObject(pObj, GROUP_TYPE::DEFAULT);
 	// 충돌 지정 
 	// Player - Monster 그룹 간의 충돌 체크
-	CollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::MONSTER);
 	CollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::DEFAULT);
-	CollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::BULLET_PLAYER, GROUP_TYPE::MONSTER);
-
+	CollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::Wall);
+	CollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::Wall, GROUP_TYPE::BULLET_PLAYER);
+	CollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::Wall, GROUP_TYPE::DEFAULT);
 }
 
 void Scene_Start::Exit()
@@ -76,12 +76,8 @@ void Scene_Start::Exit()
 void Scene_Start::Update()
 {
 	Scene::Update();
-	if (KEY_TAP(KEY::ENTER))
-	{
-		ChangeScene(SCENE_TYPE::SCENE_01);
-	}
 	Wall*wall = wallmgr.WallsRandomStart();
 
 	if(wall != nullptr)
-		AddObject(wall, GROUP_TYPE::DEFAULT);
+		AddObject(wall, GROUP_TYPE::Wall);
 }

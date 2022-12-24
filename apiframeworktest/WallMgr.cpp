@@ -10,12 +10,6 @@
 
 WallMgr::WallMgr()
 {
-	maxDamage = 1;
-	minDamage = 5;
-	maxSpeed = 1;
-	minSpeed = 5;
-
-	maxTimer = 10;
 }
 
 WallMgr::WallMgr(int _maxDamage, int _minDamage, int _maxSpeed, int _minSpeed, int _maxtimer)
@@ -44,7 +38,7 @@ Wall* WallMgr::WallsRandomStart()
 		timer = 0;
 		Wall* wall = WallCreate();
 		wall->SetName(L"Wall");
-		wall->SetScale(Vec2(1, 1));
+		wall->SetScale(Vec2(0.1f, 0.1f));
 		return wall;
 	}
 	return nullptr;
@@ -55,7 +49,6 @@ Wall* WallMgr::WallCreate()
 	srand(time(NULL));
 	int randomDamage = rand() % maxDamage + minDamage;
 	int randomSpeed = rand() % maxSpeed + minSpeed;
-	int posRand = rand() % 3;
 	
-	return new Wall{ (float)randomDamage, (float)randomSpeed,pos[posRand] };
+	return new Wall((float)randomDamage, (float)randomSpeed,pos[1]);
 }

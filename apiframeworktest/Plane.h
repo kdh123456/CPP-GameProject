@@ -3,9 +3,6 @@
 
 class Plane : public Object
 {
-private:
-
-
 public:
 	CLONE(Plane);
 public:
