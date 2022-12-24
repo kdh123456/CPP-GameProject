@@ -95,6 +95,9 @@
     <Filter Include="Engine\04. Object\Parrying">
       <UniqueIdentifier>{490b0923-2524-40e8-9abe-fc151d7f6187}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\04. Object\Backg">
+      <UniqueIdentifier>{133096cb-a04b-4c23-ac5c-94223edff24b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h">
@@ -205,6 +208,9 @@
       <Filter>Engine\04. Object\Parrying</Filter>
     </ClInclude>
     <ClInclude Include="GameManager.h" />
+    <ClInclude Include="BackGround.h">
+      <Filter>Engine\04. Object\Backg</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="apiframeworktest.rc">
@@ -311,5 +317,8 @@
       <Filter>Engine\04. Object\Parrying</Filter>
     </ClCompile>
     <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="BackGround.cpp">
+      <Filter>Engine\04. Object\Backg</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

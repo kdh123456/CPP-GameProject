@@ -14,6 +14,7 @@ private:
     bool m_isGrounded = false;
     bool m_jumpLock = false;
     bool m_headBroken = false;
+    bool m_planed = false;
     float m_jumpPower = 300.0f;
     float m_gravityScale = 300.0f;
     float m_jumpTimer = 0.0f;
@@ -30,7 +31,9 @@ private:
 public:
     void Update()       override;
     void Render(HDC _dc) override;
-    void EnterCollision(Collider* _pOther) override;
+    void EnterCollision(Collider* _pOther) override; 
+    void StayCollision(Collider* _pOther) override;
+    void ExitCollision(Collider* _pOther) override;
     void PlayerJump();
     void JumpUpdate();
     void Move(MoveDir dir);

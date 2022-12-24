@@ -7,6 +7,7 @@ class Wall :
     public Object
 {
 private:
+    bool isDied = false;
     float hp = 5;
     float _speed;
     float _damage;

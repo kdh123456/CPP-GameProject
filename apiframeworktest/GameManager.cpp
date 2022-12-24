@@ -6,7 +6,7 @@
 void GameManager::Damage(int damage)
 {
 	hp -= damage;
-	if (hp == 0)
+	if (hp <= 0)
 	{
 		SceneMgr::GetInst()->ChangeScene(SCENE_TYPE::SCENE_01);
 		SoundMgr::GetInst()->Stop(SOUND_CHANNEL::SC_BGM);
