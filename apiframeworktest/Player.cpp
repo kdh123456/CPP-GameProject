@@ -13,12 +13,19 @@
 #include "Animation.h"
 #include "Slash.h"
 #include "Parrying.h"
+#include "Core.h"
 
 Player::Player()
 {
 	// collider 새성
 	CreateCollider();
-	GetCollider()->SetScale(Vec2(20.f, 30.f));
+	GetCollider()->SetScale(Vec2(20.f, 50.f));
+	GetCollider()->SetOffsetPos(Vec2(0, 15));
+	SetScale(Vec2(100.f, 100.f));
+	SetPos(Vec2(
+		(int)(Core::GetInst()->GetResolution().x / 2), 
+		(int)(Core::GetInst()->GetResolution().y - (GetScale().y))
+	));
 
 	// image 업로드
 	Image* pImg = ResMgr::GetInst()->ImgLoad(L"PlayerAni", L"Image\\cppchar2.bmp");
@@ -84,6 +91,7 @@ void Player::EnterCollision(Collider* _pOther)
 	{
 		m_headBroken = false;
 		m_isGrounded = true;
+		GetAnimator()->Play(L"PlayerIdle", true);
 	}
 	else if (pOtherObj->GetName() == L"Wall")
 	{
@@ -99,7 +107,7 @@ void Player::PlayerJump()
 
 	m_isGrounded = false;
 	m_jumpLock = true;
-	GetAnimator()->Play(L"PlayerJump", false);
+	GetAnimator()->Play(L"PlayerJump", true);
 }
 
 void Player::JumpUpdate()
@@ -120,6 +128,16 @@ void Player::Move(MoveDir dir)
 {
 	if (m_isGrounded == false)
 		return;
+	if (m_pos.x < 0.0f)
+	{
+		m_pos.x = 0.0f;
+		return;
+	}
+	else if (m_pos.x > (float)Core::GetInst()->GetResolution().x)
+	{
+		m_pos.x = (float)Core::GetInst()->GetResolution().x;
+		return;
+	}
 
 	if (dir == MoveDir::Left)
 		m_pos.x -= 300.f * fDT;

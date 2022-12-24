@@ -11,13 +11,13 @@ private:
     Vec2 m_pos;
     int m_maxAttackPoint = 10;
     int m_currentAttackPoint = 0;
-    bool m_isGrounded = true;
+    bool m_isGrounded = false;
     bool m_jumpLock = false;
     bool m_headBroken = false;
-    float m_jumpPower = 100.0f;
-    float m_gravityScale = 98.0f;
+    float m_jumpPower = 300.0f;
+    float m_gravityScale = 300.0f;
     float m_jumpTimer = 0.0f;
-    float m_maxTimer = 0.3f;
+    float m_maxTimer = 0.8f;
 public:
     Player();
     //Player(const Player& _origin) 

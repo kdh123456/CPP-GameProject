@@ -32,7 +32,7 @@ int BWindow::Run(HINSTANCE hInstance, LPWSTR lpCmdLine, int nCmdShow)
 	this->WindowUpdate();
 
 	// Core 초기화
-	if (FAILED(Core::GetInst()->Init(m_hWnd, POINT{ 1280, 768 })))
+	if (FAILED(Core::GetInst()->Init(m_hWnd, POINT{ 600, 480 })))
 	{
 		MessageBox(nullptr, L"Core 객체 초기화 실패", L"ERROR", MB_OK);
 		return FALSE;

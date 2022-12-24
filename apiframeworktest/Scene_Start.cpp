@@ -31,17 +31,13 @@ void Scene_Start::Enter()
 	SoundMgr::GetInst()->Play(L"BGM");
 	// Object 추가
 	Object* pObj = new Player;
-	pObj->SetPos(Vec2(Core::GetInst()->GetResolution().x / 2, Core::GetInst()->GetResolution().y / 2));
-	pObj->SetScale(Vec2(100.f, 100.f));
 	AddObject(pObj, GROUP_TYPE::PLAYER);
 
 	Object* plane = new Plane;
-	plane->SetPos(Vec2(Core::GetInst()->GetResolution().x / 2, Core::GetInst()->GetResolution().y / 3));
-	plane->SetScale(Vec2(500.f, 100.f));
 	AddObject(plane, GROUP_TYPE::DEFAULT);
 
 		// 몬스터 배치
-	Vec2 vResolution(Vec2(Core::GetInst()->GetResolution()));
+	/*Vec2 vResolution(Vec2(Core::GetInst()->GetResolution()));
 	int iMonster = 16;
 	float fMoveDist = 25.f;
 	float fObjScale = 50.f;
@@ -56,7 +52,7 @@ void Scene_Start::Enter()
 		pMonsterObj->SetCenterPos(pMonsterObj->GetPos());
 		pMonsterObj->SetMoveDistance(fMoveDist);
 		AddObject(pMonsterObj, GROUP_TYPE::MONSTER);
-	}
+	}*/
 	//pObj = new Object;
 
 	//pObj->SetPos(Vec2(640.f, 384.f));
