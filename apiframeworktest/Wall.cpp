@@ -8,12 +8,15 @@
 #include "Core.h"
 #include "Plane.h"
 #include "GameManager.h"
+#include "Vec2.h";
 
 void Wall::WallDamage()
 {
 	hp -= 1;
 	if (hp == 0)
 	{
+		isDied = true;
+		SetPos(Vec2((float)Core::GetInst()->GetResolution().x * 3, 0.0f));
 		//없애준다.
 	}
 }
@@ -41,10 +44,8 @@ Wall::~Wall()
 
 void Wall::Update()
 {
-	if (KEY_TAP(KEY::SPACE))
-	{
-		isJump = true;
-	}
+	if (isDied)
+		return;
 
 	Vec2 vPos = GetPos();
 	if (!isJump)

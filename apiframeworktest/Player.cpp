@@ -80,25 +80,46 @@ void Player::Update()
 	GetAnimator()->Update();
 	JumpUpdate();
 	if ((m_isGrounded == false && m_jumpLock == false) || m_headBroken)
-		m_pos.y += m_gravityScale * fDT;
-	if (m_pos.y > Core::GetInst()->GetResolution().y - 30.f)
-		m_pos.y = Core::GetInst()->GetResolution().y - 30.f;
+		if(m_planed == false)
+			m_pos.y += m_gravityScale * fDT;
 	SetPos(m_pos);
 }
 
 void Player::EnterCollision(Collider* _pOther)
 {
 	Object* pOtherObj = _pOther->GetObj();
+	if (pOtherObj->GetName() == L"Wall")
+	{
+		m_headBroken = true;
+		m_isGrounded = false;
+	}
 	if (pOtherObj->GetName() == L"Plane")
 	{
 		m_headBroken = false;
 		m_isGrounded = true;
+		m_planed = true;
+		m_pos.y = Core::GetInst()->GetResolution().y - 35.f;
 		GetAnimator()->Play(L"PlayerIdle", true);
 	}
-	else if (pOtherObj->GetName() == L"Wall")
+}
+
+void Player::StayCollision(Collider* _pOther)
+{
+	Object* pOtherObj = _pOther->GetObj();
+	if (pOtherObj->GetName() == L"Plane")
 	{
-		m_headBroken = true;
-		m_isGrounded = false;
+		m_headBroken = false;
+		m_isGrounded = true;
+		m_planed = true;
+	}
+}
+
+void Player::ExitCollision(Collider* _pOther)
+{
+	Object* pOtherObj = _pOther->GetObj();
+	if (pOtherObj->GetName() == L"Plane")
+	{
+		m_planed = false;
 	}
 }
 

@@ -24,7 +24,7 @@ Scene_Start::~Scene_Start()
 }
 void Scene_Start::Enter()
 {
-	WallMgr* wallmg = new WallMgr(5, 1, 100, 100, 10);
+	WallMgr* wallmg = new WallMgr(5, 1, 100, 100, 5);
 	wallmgr = *wallmg;
 
 	SoundMgr::GetInst()->LoadSound(L"BGM", true, L"Sound\\pianobgm.wav");
