@@ -81,6 +81,8 @@ void Player::Update()
 	JumpUpdate();
 	if ((m_isGrounded == false && m_jumpLock == false) || m_headBroken)
 		m_pos.y += m_gravityScale * fDT;
+	if (m_pos.y > Core::GetInst()->GetResolution().y - 30.f)
+		m_pos.y = Core::GetInst()->GetResolution().y - 30.f;
 	SetPos(m_pos);
 }
 
