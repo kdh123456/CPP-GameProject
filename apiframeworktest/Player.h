@@ -12,10 +12,12 @@ private:
     int m_maxAttackPoint = 10;
     int m_currentAttackPoint = 0;
     bool m_isGrounded = true;
+    bool m_jumpLock = false;
     bool m_headBroken = false;
     float m_jumpPower = 100.0f;
     float m_gravityScale = 98.0f;
-
+    float m_jumpTimer = 0.0f;
+    float m_maxTimer = 0.3f;
 public:
     Player();
     //Player(const Player& _origin) 
@@ -29,7 +31,8 @@ public:
     void Update()       override;
     void Render(HDC _dc) override;
     void EnterCollision(Collider* _pOther) override;
-    void Jump();
+    void PlayerJump();
+    void JumpUpdate();
     void Move(MoveDir dir);
     void TryParrying();
     void TryAttack();

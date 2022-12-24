@@ -16,7 +16,7 @@ Animator::~Animator()
 void Animator::CreateAnimation(const wstring _strName, Image* _pImage, Vec2 _vLT, Vec2 _vSliceSize, Vec2 _vStep, UINT _iFrameCount, float _fDuration)
 {
 	Animation* pAnim = FindAnimation(_strName);
-	assert(nullptr == pAnim);
+	//assert(nullptr == pAnim);
 
 	pAnim = new Animation;
 	pAnim->SetName(_strName);
@@ -35,6 +35,14 @@ Animation* Animator::FindAnimation(const wstring _strName)
 	return iter->second;
 }
 
+void Animator::SetDefaultAnimation(const wstring _strName)
+{
+	Animation* ani = FindAnimation(_strName);
+	if (ani == nullptr)
+		return;
+	m_defaultAni = ani;
+}
+
 void Animator::Play(const wstring _strName, bool _bRepeat)
 {
 	m_pCurAni= FindAnimation(_strName);
@@ -47,9 +55,17 @@ void Animator::Update()
 	if (nullptr != m_pCurAni)
 	{
 		m_pCurAni->Update();
-		if (m_bRepeat && m_pCurAni->IsFinish())
+		if (m_pCurAni->IsFinish())
 		{
-			m_pCurAni->SetFrame(0);
+			if (m_bRepeat)
+				m_pCurAni->SetFrame(0);
+			else
+				if (m_defaultAni != nullptr)
+				{
+					m_pCurAni->SetFrame(0);
+					m_pCurAni = m_defaultAni;
+					m_bRepeat = true;
+				}
 		}
 	}
 }

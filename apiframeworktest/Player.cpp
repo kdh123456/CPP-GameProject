@@ -19,17 +19,45 @@ Player::Player()
 	GetCollider()->SetScale(Vec2(20.f, 30.f));
 
 	// image 업로드
-	Image* pImg = ResMgr::GetInst()->ImgLoad(L"PlayerAni", L"Image\\jiwoo.bmp");
-
+	Image* pImg = ResMgr::GetInst()->ImgLoad(L"PlayerAni", L"Image\\cppchar2.bmp");
 	// animator 생성 및 animation 사용
 	CreateAnimator();
-	GetAnimator()->CreateAnimation(L"Jiwoofront", pImg, Vec2(0.f, 150.f), Vec2(50.f, 50.f), Vec2(50.f, 0.f), 5, 0.2f);
-	GetAnimator()->Play(L"Jiwoofront", true);
+	Animator* ani = GetAnimator();
+	ani->CreateAnimation(
+		L"PlayerIdle", // 애니 이름
+		pImg,  // 타겟 이미지
+		Vec2(0.f, 0.f), // 시작 위치
+		Vec2(90.f, 75.f), // 자르기 사이즈
+		Vec2(90.f, 0.f), // 프레임당 움직일 사이즈?
+		2,  // 프레임 크기
+		0.4f); // 프레임 당 속도
+	ani->CreateAnimation(
+		L"PlayerGroundAttack", pImg, Vec2(180.f, 0.f), Vec2(90.f, 75.f), Vec2(90.f, 0.f),
+		2,  
+		0.2f);
+	ani->CreateAnimation(
+		L"PlayerGroundParry", pImg, Vec2(360.f, 0.f), Vec2(90.f, 75.f), Vec2(90.f, 0.f),
+		1,
+		0.2f);
+	ani->CreateAnimation(
+		L"PlayerJump", pImg, Vec2(450.f, 0.f), Vec2(90.f, 75.f), Vec2(90.f, 0.f),
+		1,
+		0.2f);
+	ani->CreateAnimation(
+		L"PlayerJumpAttack", pImg, Vec2(540.f, 0.f), Vec2(90.f, 75.f), Vec2(90.f, 0.f),
+		2,
+		0.2f);
+	ani->CreateAnimation(
+		L"PlayerJumpParry", pImg, Vec2(720.f, 0.f), Vec2(90.f, 75.f), Vec2(90.f, 0.f),
+		1,
+		0.2f);
 
+	ani->SetDefaultAnimation(L"PlayerIdle");
+	ani->Play(L"PlayerIdle", true);
 	// animation offset 위로 올리기. 
-	Animation* pAnim = GetAnimator()->FindAnimation(L"Jiwoofront");
-	for (size_t i = 0; i < pAnim->GetMaxFrame(); i++)
-		pAnim->GetFrame(i).vOffset = Vec2(10.f, -50.f);
+	//Animation* pAnim = GetAnimator()->FindAnimation(L"PlayerIdle");
+	//for (size_t i = 0; i < pAnim->GetMaxFrame(); i++)
+	//	pAnim->GetFrame(i).vOffset = Vec2(0.f, -0.f);
 }
 Player::~Player()
 {
@@ -41,7 +69,8 @@ void Player::Update()
 	m_pos = GetPos();
 	Input();
 	GetAnimator()->Update();
-	if (m_isGrounded == false || m_headBroken)
+	JumpUpdate();
+	if ((m_isGrounded == false && m_jumpLock == false) || m_headBroken)
 		m_pos.y += m_gravityScale * fDT;
 	SetPos(m_pos);
 }
@@ -61,13 +90,28 @@ void Player::EnterCollision(Collider* _pOther)
 	}
 }
 
-void Player::Jump()
+void Player::PlayerJump()
 {
-	if (m_isGrounded == false)
+	if (m_isGrounded == false || m_jumpLock)
 		return;
 
 	m_isGrounded = false;
-	m_pos.y -= m_jumpPower;
+	m_jumpLock = true;
+	GetAnimator()->Play(L"PlayerJump", false);
+}
+
+void Player::JumpUpdate()
+{
+	if (m_jumpLock == false)
+		return;
+	if (m_headBroken || (m_jumpTimer <= m_maxTimer) == false)
+	{
+		m_jumpLock = false;
+		m_jumpTimer = 0.0f;
+		return;
+	}
+	m_pos.y -= m_jumpPower * fDT;
+	m_jumpTimer += fDT;
 }
 
 void Player::Move(MoveDir dir)
@@ -83,13 +127,19 @@ void Player::Move(MoveDir dir)
 
 void Player::TryParrying()
 {
+	if (m_isGrounded)
+		GetAnimator()->Play(L"PlayerGroundParry", false);
+	else
+		GetAnimator()->Play(L"PlayerJumpParry", false);
 }
 
 void Player::TryAttack()
 {
-	Collider* atkCol = new Collider();
-	atkCol->FinalUpdate();
-//	if()
+	if(m_isGrounded)
+		GetAnimator()->Play(L"PlayerGroundAttack", false);
+	else
+		GetAnimator()->Play(L"PlayerJumpAttack", false);
+	//	if()
 }
 
 void Player::TrySkill()
@@ -105,7 +155,9 @@ void Player::Input()
 	if (KEY_HOLD(KEY::DOWN))
 		TryParrying();
 	if (KEY_TAP(KEY::UP))
-		Jump();
+		PlayerJump();
+	if (KEY_TAP(KEY::Z))
+		TryAttack();
 }
 
 void Player::Render(HDC _dc)
