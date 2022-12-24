@@ -16,5 +16,6 @@ public:
     UINT GetWidth() { return m_bitInfo.bmWidth; }
     UINT GetHeight() { return m_bitInfo.bmHeight; }
     HDC GetDC() { return m_hdc; }
+    CLONE(Image);
 };
 

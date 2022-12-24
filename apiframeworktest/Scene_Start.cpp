@@ -12,8 +12,11 @@
 #include "SceneMgr.h"
 #include "SoundMgr.h"
 #include "Wall.h"
+#include "WallMgr.h"
+
 Scene_Start::Scene_Start()
 {
+
 }
 
 Scene_Start::~Scene_Start()
@@ -21,6 +24,9 @@ Scene_Start::~Scene_Start()
 }
 void Scene_Start::Enter()
 {
+	WallMgr* wallmg = new WallMgr(5, 1, 100, 90, 1);
+	wallmgr = *wallmg;
+
 	SoundMgr::GetInst()->LoadSound(L"BGM", true, L"Sound\\pianobgm.wav");
 	SoundMgr::GetInst()->Play(L"BGM");
 	// Object 추가
@@ -33,30 +39,6 @@ void Scene_Start::Enter()
 	plane->SetPos(Vec2(Core::GetInst()->GetResolution().x / 2, Core::GetInst()->GetResolution().y / 3));
 	plane->SetScale(Vec2(500.f, 100.f));
 	AddObject(plane, GROUP_TYPE::DEFAULT);
-	
-	Object* Obj = new Wall(200,1);
-	Obj->SetPos(Vec2(Core::GetInst()->GetResolution().x/2, (LONG)170));
-	Obj->SetScale(Vec2(1, 1));
-	AddObject(Obj, GROUP_TYPE::Wall);
-
-//	Object* pOtherPlayer = new Player(*(Player*)pObj);
-	/*Object* pOtherPlayer = pObj->Clone();
-	pOtherPlayer->SetPos(Vec2(Core::GetInst()->GetResolution().x / 2.f + 100.f, Core::GetInst()->GetResolution().y / 2.f));
-	AddObject(pOtherPlayer, GROUP_TYPE::PLAYER);*/
-
-	//	Object* pOtherPlayer = new Player(*(Player*)pObj);
-		/*Object* pOtherPlayer = pObj->Clone();
-		pOtherPlayer->SetPos(Vec2(Core::GetInst()->GetResolution().x / 2.f + 100.f, Core::GetInst()->GetResolution().y / 2.f));
-		AddObject(pOtherPlayer, GROUP_TYPE::PLAYER);*/
-
-		//m_vecObj[(UINT)GROUP_TYPE::DEFAULT].push_back(pObj); 
-
-		// Monster Object 추가
-		//Monster* pMonsterObj = new Monster;
-		//pMonsterObj->SetPos(Vec2(640.f, 50.f));
-		//pMonsterObj->SetScale(Vec2(50.f, 50.f));
-		//pMonsterObj->SetCenterPos(pMonsterObj->GetPos());
-		//AddObject(pMonsterObj, GROUP_TYPE::MONSTER);
 
 		// 몬스터 배치
 	Vec2 vResolution(Vec2(Core::GetInst()->GetResolution()));
@@ -102,4 +84,8 @@ void Scene_Start::Update()
 	{
 		ChangeScene(SCENE_TYPE::SCENE_01);
 	}
+	Wall*wall = wallmgr.WallsRandomStart();
+
+	if(wall != nullptr)
+		AddObject(wall, GROUP_TYPE::DEFAULT);
 }

@@ -7,7 +7,7 @@
 #include "KeyMgr.h"
 #include "Core.h"
 
-Wall::Wall(float speed, float damage)
+Wall::Wall(float speed, float damage, Vec2 statPosition)
 {
 	jumpTimer = 0;
 	jumpHeight = Core::GetInst()->GetResolution().y - Core::GetInst()->GetResolution().y / 9;
@@ -18,6 +18,7 @@ Wall::Wall(float speed, float damage)
 
 	isParry = false;
 
+	SetPos(statPosition);
 	CreateCollider();
 	GetCollider()->SetScale(Vec2(500.f, 330.f));
 }
@@ -80,6 +81,10 @@ void Wall::EnterCollision(Collider* _pOther)
 
 	}
 	else if (pOtherObj->GetName() == L"Ground")
+	{
+
+	}
+	else if (pOtherObj->GetName() == L"Attack")
 	{
 
 	}
