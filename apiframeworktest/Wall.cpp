@@ -6,8 +6,19 @@
 #include "Image.h"
 #include "KeyMgr.h"
 #include "Core.h"
+#include "Plane.h"
+#include "GameManager.h"
 
-Wall::Wall(float speed, float damage, Vec2 statPosition)
+void Wall::WallDamage()
+{
+	hp -= 1;
+	if (hp == 0)
+	{
+		//없애준다.
+	}
+}
+
+Wall::Wall(float damage, float speed, Vec2 statPosition)
 {
 	jumpTimer = 0;
 	jumpHeight = Core::GetInst()->GetResolution().y - Core::GetInst()->GetResolution().y / 9;
@@ -72,20 +83,16 @@ void Wall::EnterCollision(Collider* _pOther)
 {
 	Object* pOtherObj = _pOther->GetObj();
 
-	if (pOtherObj->GetName() == L"Player")
+	if (pOtherObj->GetName() == L"Parry")
 	{
-
+		isJump = true;
 	}
-	else if (pOtherObj->GetName() == L"Parry")
+	else if (pOtherObj->GetName() == L"Plane")
 	{
-
-	}
-	else if (pOtherObj->GetName() == L"Ground")
-	{
-
+		GameManager::GetInst()->Damage(_damage);
 	}
 	else if (pOtherObj->GetName() == L"Attack")
 	{
-
+		WallDamage();
 	}
 }

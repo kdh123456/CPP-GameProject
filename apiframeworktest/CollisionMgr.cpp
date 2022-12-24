@@ -21,7 +21,7 @@ void CollisionMgr::Update()
 	{
 		for (UINT Col = Row; Col < (UINT)GROUP_TYPE::END; ++Col)
 		{
-			if (m_arrCheck[Row] & (1 << Col))
+			if (m_arrCheck[Row] && (1 << Col))
 			{
 				CollisionGroupUpdate((GROUP_TYPE)Row,(GROUP_TYPE)Col);
 			}

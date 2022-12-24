@@ -204,6 +204,7 @@
     <ClInclude Include="Parrying.h">
       <Filter>Engine\04. Object\Parrying</Filter>
     </ClInclude>
+    <ClInclude Include="GameManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="apiframeworktest.rc">
@@ -309,5 +310,6 @@
     <ClCompile Include="Parrying.cpp">
       <Filter>Engine\04. Object\Parrying</Filter>
     </ClCompile>
+    <ClCompile Include="GameManager.cpp" />
   </ItemGroup>
 </Project>

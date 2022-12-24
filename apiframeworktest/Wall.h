@@ -7,11 +7,15 @@ class Wall :
     public Object
 {
 private:
+    float hp = 5;
     float _speed;
     float _damage;
     Image* _image;
 public:
     bool isParry;
+
+private:
+    void WallDamage();
 public:
     Wall(float _speed, float _damage, Vec2 startPos);
     ~Wall();

@@ -12,8 +12,8 @@ private:
 	Scene* m_pCurScene;						  // ÇöÀç ¾À
 public:
 	Scene* GetCurScene() { return m_pCurScene; }
-private:
 	void ChangeScene(SCENE_TYPE _eNext);
+private:
 	friend class EventMgr;
 public:
 	void	 Init();
